@@ -20,10 +20,12 @@ current_dir = Path(__file__).absolute().parent
 stl2obj_dir = os.path.join(current_dir, __name__)
 print(f"{__name__} directory: {stl2obj_dir}")
 
-if platform.system() in ['Windows']:
+if platform.system() == 'Windows':
     extra_compile_args = []
+elif platform.system() == 'Darwin':
+    extra_compile_args = ['-g', '-std=c++11', '-stdlib=libc++', '-mmacosx-version-min=10.5']
 else:
-    extra_compile_args = ['-std=c++11', '-ljpeg', '-lpng']
+    extra_compile_args = ['-std=c++11']
 
 with open(os.path.join(current_dir, 'requirements.txt')) as req_f:
     requirements = []
@@ -37,16 +39,18 @@ additional_files = []
 path_to_src = os.path.join('stl2obj', 'src')
 for file in os.listdir(path_to_src):
     name, ext = os.path.splitext(file)
-    if name != 'stl2obj' and ext != '.h':
+
+    # don't needed to add `stl2obj.cpp` and `.h` files
+    if name != __name__ and ext != '.h':
         additional_files.append(os.path.join(path_to_src, file))
 
 extensions = [
-    Extension(f'{__name__}', sources=[f'{stl2obj_dir}/{__name__}.pyx', *additional_files]),
+    Extension(name=f'{__name__}',
+              sources=[f'{stl2obj_dir}/{__name__}.pyx', *additional_files],
+              language='c++',
+              extra_compile_args=extra_compile_args,
+              ),
 ]
-
-for e in extensions:
-    e.cython_directives = {'language_level': "3"}  # all are Python-3
-    e.language = "c++"
 
 DEBUG = True
 
