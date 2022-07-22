@@ -1,0 +1,2 @@
+setuptools >= 50.0.0
+cython >= 0.29.24
