@@ -1,9 +1,7 @@
 # cython: language_level=3
 # distutils: language=c++
 
-cdef extern from "string" namespace "std":
-    cdef cppclass string:
-        char* c_str()
+from libcpp.string cimport string
 
 cdef extern from "src/stl2obj.cpp":
     pass
