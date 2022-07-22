@@ -8,19 +8,13 @@ cdef extern from "string" namespace "std":
 cdef extern from "src/stl2obj.cpp":
     pass
 
-'''
-except + mean if the C++ code or the initial memory allocation raises an exception due to a failure, this will let
-Cython safely raise an appropriate Python exception
-'''
-
 # Redeclare the .h in cython space
 cdef extern from "src/stl2obj.h":
     int convert(string src, string dst);
 		
 '''
 simple pure python wrapping
-use normal def if your cython code dont need to do anything else but wrapping it
-returns double as python object float
+use normal def if your cython code don't need to do anything else but wrapping it
 '''
 
 # after can be imported after build
