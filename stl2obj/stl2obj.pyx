@@ -24,6 +24,5 @@ returns double as python object float
 '''
 
 # after can be imported after build
-def stl_to_ob_convert(str src, str dst):
+def stl_to_obj_convert(str src, str dst):
     return convert(src, dst)  # convert - c++ func
-    

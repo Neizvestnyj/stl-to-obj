@@ -32,13 +32,39 @@ with open(os.path.join(current_dir, 'requirements.txt')) as req_f:
     for line in lines:
         requirements.append(line.replace('\n', '').strip())
 
+additional_files = []
+
+path_to_src = os.path.join('stl2obj', 'src')
+for file in os.listdir(path_to_src):
+    name, ext = os.path.splitext(file)
+    if name != 'stl2obj' and ext != '.h':
+        additional_files.append(os.path.join(path_to_src, file))
+
 extensions = [
-    Extension(f'{__name__}', [f'{stl2obj_dir}/{__name__}.pyx']),
+    Extension(f'{__name__}', sources=[f'{stl2obj_dir}/{__name__}.pyx', *additional_files]),
 ]
 
 for e in extensions:
     e.cython_directives = {'language_level': "3"}  # all are Python-3
     e.language = "c++"
+
+DEBUG = True
+
+if DEBUG:
+    import shutil
+    import os
+
+    # remove build dirs
+    rm_dirs = ['build', 'dist', f'{__name__}.egg-info']
+    for dir_ in rm_dirs:
+        dir_ = os.path.join(current_dir, dir_)
+
+        try:
+            if os.path.exists(dir_):
+                shutil.rmtree(dir_)
+                print(f'{dir_} removed')
+        except Exception as del_err:
+            print(del_err)
 
 setup(name=__name__,
       version=__version__,
