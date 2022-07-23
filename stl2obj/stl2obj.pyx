@@ -3,12 +3,11 @@
 
 from libcpp.string cimport string
 
-
 # Redeclare the .h in cython space
 cdef extern from "src/_stl2obj.h":
 
     int convert(string src, string dst);
-		
+
 '''
 simple pure python wrapping
 use normal def if your cython code don't need to do anything else but wrapping it
