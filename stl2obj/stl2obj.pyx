@@ -1,7 +1,5 @@
 # cython: language_level=3
 # distutils: language=c++
-from kivy.uix._events import EventDispatcher
-
 
 from libcpp.string cimport string
 
@@ -18,21 +16,18 @@ use normal def if your cython code don't need to do anything else but wrapping i
 
 cdef class Stl2Obj:
 
-    cdef string _src
+    cdef string src
 
-    cdef string _dst
+    cdef string dst
 
-    def __cinit__(self):
+    def __init__(self, src, dst):
 
-        self._src = b""
-        self._dst = b""
-
-    @property
-    def src(self)
+        self.src = <string>src.encode('utf-8')
+        self.dst = <string>dst.encode('utf-8')
 
     def convert(self):
 
         print("converting stl to obj - new test")
 
-        return convert(self._src, self._dst)  # convert - c++ func
+        return convert(self.src, self.dst)  # convert - c++ func
 
