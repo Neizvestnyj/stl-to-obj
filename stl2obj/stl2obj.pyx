@@ -15,18 +15,15 @@ use normal def if your cython code don't need to do anything else but wrapping i
 
 cdef class Stl2Obj:
 
-    cdef string src
-
-    cdef string dst
 
     def __init__(self, src, dst):
+        ...
+        
 
-        self.src = <string>src.encode('utf-8')
-        self.dst = <string>dst.encode('utf-8')
+    def convert(self, src, dst):
 
-    def convert(self):
+        cdef cpp_src = <string>src.encode('utf-8')
+        cdef cpp_dst = <string>dst.encode('utf-8')
 
-        print("converting stl to obj - new test")
-
-        return convert(self.src, self.dst)  # convert - c++ func
+        return convert(cpp_src, cpp_dst)  # convert - c++ func
 
