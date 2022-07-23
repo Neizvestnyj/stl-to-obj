@@ -32,7 +32,9 @@ From [GitHub](https://github.com) directly
 ```bash
 pip install https://github.com/Neizvestnyj/stl-to-obj/archive/master.zip
 ```
-or
+**OR**
+
+if needed `python setup.py clean --all`
 ```bash
 git clone https://github.com/Neizvestnyj/stl-to-obj.git
 cd stl-to-obj-master
