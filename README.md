@@ -21,3 +21,24 @@ stl2obj.exe
 ./stl2obj
 ```
 6) Enjoy fast conversion!
+
+### Installation
+From [pypi](https://pypi.org/project/stl-obj-convertor/)
+```bash
+pip install stl2obj
+```
+
+From [GitHub](https://github.com) directly
+```bash
+pip install https://github.com/Neizvestnyj/stl-to-obj/archive/master.zip
+```
+or
+```bash
+git clone https://github.com/Neizvestnyj/stl-to-obj.git
+cd stl-to-obj-master
+python setup.py install
+```
+
+### Authors
+
+[Neizvestnyj](https://github.com/Neizvestnyj), [psychowasp](https://github.com/psychowasp), [Amir Baserinia](https://github.com/baserinia)
