@@ -26,7 +26,7 @@ print(f"{__name__} directory: {stl2obj_dir}")
 if platform.system() == 'Windows':
     extra_compile_args = []
 elif platform.system() == 'Darwin':
-    extra_compile_args = ['-g', '-std=c++11', '-stdlib=libc++', '-mmacosx-version-min=10.5']
+    extra_compile_args = ['-g', '-std=c++11', '-stdlib=libc++']
 else:
     extra_compile_args = ['-std=c++11']
 
