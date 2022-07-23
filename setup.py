@@ -1,12 +1,9 @@
 from setuptools import setup, Extension
 
-
 import sys
 import os
 from pathlib import Path
 import platform
-
-from os.path import join
 
 try:
     from Cython.Build import cythonize
@@ -26,7 +23,7 @@ print(f"{__name__} directory: {stl2obj_dir}")
 if platform.system() == 'Windows':
     extra_compile_args = []
 elif platform.system() == 'Darwin':
-    extra_compile_args = ['-g', '-std=c++11', '-stdlib=libc++']
+    extra_compile_args = ['-std=c++11', '-stdlib=libc++']
 else:
     extra_compile_args = ['-std=c++11']
 
@@ -37,91 +34,38 @@ with open(os.path.join(current_dir, 'requirements.txt')) as req_f:
     for line in lines:
         requirements.append(line.replace('\n', '').strip())
 
-additional_files = []
-
-# path_to_src = os.path.join('stl2obj', 'src')
-# for file in os.listdir(path_to_src):
-#     name, ext = os.path.splitext(file)
-
-#     # don't needed to add `stl2obj.cpp` and `.h` files
-#     if name != __name__ and ext != '.h':
-#         additional_files.append(os.path.join(path_to_src, file))
-
 cpp_sources = [
     "exportobj.cpp",
-    # "exportobj.h",
-    # "geombase.h",
-    #"geometry.h",
     "importstl.cpp",
-    # "importstl.h",
-    # "kdtree.h",
     "progress.cpp",
-    # "progress.h",
     "_stl2obj.cpp",
-    #"stl2obj.h",
-    # "vectornd.h",
-    # "visitor.h"
 ]
-path_to_src = join('stl2obj', 'src')
+path_to_src = os.path.join(stl2obj_dir, 'src')
 
-additional_files = [join(path_to_src, src) for src in cpp_sources]
+additional_files = [os.path.join(path_to_src, src) for src in cpp_sources]
 
-#print(additional_files)
-# extensions = [
-#     Extension(name=f'{__name__}',
-#               sources=[f'{stl2obj_dir}/{__name__}.pyx', *additional_files],
-#               language='c++',
-#               extra_compile_args=extra_compile_args,
-#               ),
-# ]
-
-
-setup(
-    ext_modules = cythonize(
-           Extension(name="stl2obj_test",
-              sources=[f'{stl2obj_dir}/stl2obj.pyx', *additional_files],
+extensions = [
+    Extension(name=f'{__name__}',
+              sources=[f'{stl2obj_dir}/{__name__}.pyx', *additional_files],
               language='c++',
-              extra_compile_args=[
-                '-std=c++11', '-stdlib=libc++',
-              ],
-            )
-           
-        )
+              extra_compile_args=extra_compile_args,
+              ),
+]
+
+setup(name=__name__,
+      version=__version__,
+      author="Neizvestnyj",
+      url=f'https://github.com/Neizvestnyj/stl-to-obj',
+      description='C++ std to obj converter for Python',
+      platforms=['all'],
+      license='GPL-3.0 License',
+      keywords=["python c++ cython std2obj"],
+      packages=[__name__],
+      ext_modules=cythonize(extensions),
+      install_requires=requirements,
+      # Disable zip_safe, because:
+      #   - Cython won't find `.pxd` files inside installed .egg, hard to compile libs depending on this one
+      #   - dynamic loader may need to have the library unzipped to a temporary directory anyway (at import time)
+      zip_safe=False,
+      python_requires=">=3.6",
       )
-
-# DEBUG = True
-
-# if DEBUG:
-#     import shutil
-#     import os
-
-#     # remove build dirs
-#     rm_dirs = ['build', 'dist', f'{__name__}.egg-info']
-#     for dir_ in rm_dirs:
-#         dir_ = os.path.join(current_dir, dir_)
-
-#         try:
-#             if os.path.exists(dir_):
-#                 shutil.rmtree(dir_)
-#                 print(f'{dir_} removed')
-#         except Exception as del_err:
-#             print(del_err)
-
-# setup(name=__name__,
-#       version=__version__,
-#       author="Neizvestnyj",
-#       url=f'https://github.com/Neizvestnyj/{__name__}',
-#       description='C++ std to obj converter for Python',
-#       platforms=['all'],
-#       license='GPL-3.0 License',
-#       keywords=["python c++ cython std2obj"],
-#       # it is necessary to add f`{__name__}/__init__.py` to the package folder
-#       packages=[__name__],
-#       ext_modules=cythonize(extensions),
-#       install_requires=requirements,
-#       # Disable zip_safe, because:
-#       #   - Cython won't find `.pxd` files inside installed .egg, hard to compile libs depending on this one
-#       #   - dynamic loader may need to have the library unzipped to a temporary directory anyway (at import time)
-#       zip_safe=False,
-#       python_requires=">=3.8",
-#       )

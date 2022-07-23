@@ -1,8 +1,7 @@
 #include <cstdio>
 #include <cstdlib>
-
-
 #include <string>
+
 #include "vectornd.h"
 #include "geometry.h"
 #include "importstl.h"
@@ -14,14 +13,7 @@
 // // author
 // static const char* AUTHOR = "Amir Baserinia/Neizvestnyj";
 
-// version information
-// void version()
-// {
-//     printf("%s converts an STL CAD file to OBJ format.\n", PROGRAM_NAME);
-//     printf("Copyright (c) 2017-2022 %s\n", AUTHOR);
-// }
 namespace std {
-//int convert(char* src, char* dst) {
     int convert(string src, string dst) {
         /*
         src - full path to stl file
@@ -43,9 +35,10 @@ namespace std {
         //  write down the tesselation object into OBJ file (save OBJ)
         tessel.visit(ExportOBJ(dst));
 
-        return 1;
+        return 0;
     }
 }
+
 /*
 int main (int argc, char **argv)
 {
