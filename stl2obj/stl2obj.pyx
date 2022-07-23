@@ -1,22 +1,26 @@
 # cython: language_level=3
 # distutils: language=c++
 
-cdef extern from "string" namespace "std":
-    cdef cppclass string:
-        char* c_str()
+from libcpp.string cimport string
 
-cdef extern from "src/stl2obj.cpp":
-    pass
 
 # Redeclare the .h in cython space
-cdef extern from "src/stl2obj.h":
-    int convert(string src, string dst);
+cdef extern from "src/_stl2obj.h":
+
+    int convert(string& src, string& dst);
 		
 '''
 simple pure python wrapping
 use normal def if your cython code don't need to do anything else but wrapping it
 '''
 
-# after can be imported after build
-def stl_to_obj_convert(str src, str dst):
-    return convert(src, dst)  # convert - c++ func
+def stl_to_ob_convert(str src, str dst):
+
+    print("converting stl to obj")
+
+    cdef string cpp_src = <string>src.encode('utf-8')
+    cdef string cpp_dst = <string>dst.encode('utf-8')
+
+
+    return convert(cpp_src, cpp_dst)  # convert - c++ func
+

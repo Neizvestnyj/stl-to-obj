@@ -1,13 +1,13 @@
 # Object name
-o F:\VS\stl-to-obj\files\cube.obj
+o files/cube.obj
 
 # Begin list of vertices
 v -1 -1 -1 1.0
 v -1 1 -1 1.0
-v -1 -1 1 1.0
-v -1 1 1 1.0
 v 1 -1 -1 1.0
 v 1 1 -1 1.0
+v -1 -1 1 1.0
+v -1 1 1 1.0
 v 1 -1 1 1.0
 v 1 1 1 1.0
 # End list of vertices
