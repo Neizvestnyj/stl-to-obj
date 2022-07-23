@@ -2,4 +2,8 @@
 
 #include <string>
 
-int convert(std::string& src, std::string& dst);
+namespace std {
+    
+    int convert(string src, string dst);
+
+}

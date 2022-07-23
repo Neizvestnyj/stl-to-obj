@@ -20,32 +20,32 @@
 //     printf("%s converts an STL CAD file to OBJ format.\n", PROGRAM_NAME);
 //     printf("Copyright (c) 2017-2022 %s\n", AUTHOR);
 // }
-
+namespace std {
 //int convert(char* src, char* dst) {
-int convert(std::string& src, std::string& dst) {
-    /*
-    src - full path to stl file
-    dst - full path to obj file
-    */
+    int convert(string src, string dst) {
+        /*
+        src - full path to stl file
+        dst - full path to obj file
+        */
 
-    // Variables that are set according to the specified options.
-    bool merge_vertices = false;
-    bool fill_holes = false;
-    bool stich_curves = false;
-    bool tolerance_val = false;
+        // Variables that are set according to the specified options.
+        bool merge_vertices = false;
+        bool fill_holes = false;
+        bool stich_curves = false;
+        bool tolerance_val = false;
 
-    //  create a geometry tesselation object
-    Geometry tessel;
+        //  create a geometry tesselation object
+        Geometry tessel;
 
-    //  fill up the tesselation object with STL data (load STL)
-    tessel.visit(ImportSTL(src));
+        //  fill up the tesselation object with STL data (load STL)
+        tessel.visit(ImportSTL(src));
 
-    //  write down the tesselation object into OBJ file (save OBJ)
-    tessel.visit(ExportOBJ(dst));
+        //  write down the tesselation object into OBJ file (save OBJ)
+        tessel.visit(ExportOBJ(dst));
 
-    return 1;
+        return 1;
+    }
 }
-
 /*
 int main (int argc, char **argv)
 {
