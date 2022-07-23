@@ -60,7 +60,6 @@ setup(name=__name__,
       platforms=['all'],
       license='GPL-3.0 License',
       keywords=["python c++ cython std2obj"],
-      packages=[__name__],
       ext_modules=cythonize(extensions),
       install_requires=requirements,
       # Disable zip_safe, because:

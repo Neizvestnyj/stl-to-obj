@@ -6,18 +6,15 @@
 #include "geometry.h"
 #include "importstl.h"
 #include "exportobj.h"
-//#include "_stl2obj.h"
-// // The name of this program
-// static const char* PROGRAM_NAME = "stl2obj";
-
-// // author
-// static const char* AUTHOR = "Amir Baserinia/Neizvestnyj";
+#include "_stl2obj.h"
 
 namespace std {
+
     int convert(string src, string dst) {
         /*
         src - full path to stl file
         dst - full path to obj file
+        return 0
         */
 
         // Variables that are set according to the specified options.
@@ -42,7 +39,7 @@ namespace std {
 /*
 int main (int argc, char **argv)
 {
-    convert("F:\\VS\\stl-to-obj\\files\\surface.stl", "F:\\VS\\stl-to-obj\\files\\surface.obj");
+    std::convert("F:\\VS\\stl-to-obj\\files\\surface.stl", "F:\\VS\\stl-to-obj\\files\\surface.obj");
     return EXIT_SUCCESS;
 }
 */
