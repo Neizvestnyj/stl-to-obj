@@ -17,12 +17,6 @@ namespace std {
         return 0
         */
 
-        // Variables that are set according to the specified options.
-        bool merge_vertices = false;
-        bool fill_holes = false;
-        bool stich_curves = false;
-        bool tolerance_val = false;
-
         //  create a geometry tesselation object
         Geometry tessel;
 
