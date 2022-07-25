@@ -47,7 +47,7 @@ void test_callback(int code, void* call_object) {
     typedef void (*func_ptr)(int);
 
     void* object_pointer = call_object;
-    func_ptr object_func = static_cast<func_ptr>(object_pointer);
+    func_ptr object_func = reinterpret_cast<func_ptr>(object_pointer);
     object_func(code);
 }
 
