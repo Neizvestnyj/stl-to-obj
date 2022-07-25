@@ -39,8 +39,16 @@ cpp_sources = [
     "importstl.cpp",
     "progress.cpp",
     "_stl2obj.cpp",
+    "exists.cpp",
 ]
 path_to_src = os.path.join(stl2obj_dir, 'src')
+
+# check if all files are included
+for file in os.listdir(path_to_src):
+    name, ext = os.path.splitext(file)
+
+    if ext == '.cpp' and file not in cpp_sources:
+        print(f'{file} does not included')
 
 additional_files = [os.path.join(path_to_src, src) for src in cpp_sources]
 
