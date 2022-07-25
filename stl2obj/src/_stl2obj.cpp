@@ -43,7 +43,6 @@ void convert(string src, string dst, void(*callback)(int, void*), void* py_objec
 
 void test_callback(int code, void* call_object) {
     // just callback, that call other c++ function pointer. In python `call_object` - pointer to python function
-
     typedef void (*func_ptr)(int);
 
     void* object_pointer = call_object;
@@ -51,11 +50,11 @@ void test_callback(int code, void* call_object) {
     object_func(code);
 }
 
-void callback_object(int code) {
+void test_call_object(int code) {
     cout << "Object callback: " << code << endl;
 }
 
-int main (int argc, char **argv)
+int main(int argc, char **argv)
 {   
     string src, dst;
     
@@ -71,8 +70,10 @@ int main (int argc, char **argv)
 
     cout << src << " will be converted and save as " << dst << endl;
 
+    void* vp = (void*)test_call_object;
+
     // or you can pass: "", "", NULL, NULL
-    convert(src, dst, &test_callback, callback_object);
+    convert(src, dst, &test_callback, vp);
 
     return EXIT_SUCCESS;
 }
