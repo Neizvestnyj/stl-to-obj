@@ -2,8 +2,6 @@
 
 #include <string>
 
-namespace std {
+using namespace std;
 
-    int convert(string src, string dst);
-
-}
+void convert(string src, string dst, void(*callback)(int, void*), void* py_object);
