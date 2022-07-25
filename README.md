@@ -5,22 +5,17 @@ It is powerful python tool to convert stl file to obj using c++ in backend and b
 with cython for all platforms
 
 ### Build pure c++
-1) Install [CMake](https://cmake.org/install/). 
-2) Uncomment `int main` function in **stl2obj/src/stl2obj.cpp** 
-3) In this function change full path to *stl* and *obj* file, it will
-be something like 
-`convert("<PATH-TO-stl-to-obj-master>/files/cube.stl", "<PATH-TO-stl-to-obj-master>/files/cube.obj");`. 
-   * **Note**: if you are on **Windows**, replace `/` to `//` in the path. 
-4) Then run `build.cmd` for **Windows** and in `build\Debug` folder you will find **exe** file
+1) Install [CMake](https://cmake.org/install/).
+2) Then run `build.cmd` for **Windows** and in `build\Debug` folder you will find **exe** file
 or run `sh build.sh` for **Linux/macOS** and you find will runnable `stl2obj` in `build` folder.
-5) In terminal type 
+3) In terminal type 
 ```bash
 # Windows
-stl2obj.exe
+stl2obj.exe <src> <dst>
 # Linux/MacOS
-./stl2obj
+./stl2obj <src> <dst>
 ```
-6) Enjoy fast conversion!
+4) Enjoy fast conversion!
 
 ### Installation
 From [pypi](https://pypi.org/project/stl-obj-convertor/)
@@ -39,6 +34,17 @@ if needed `python setup.py clean --all`
 git clone https://github.com/Neizvestnyj/stl-to-obj.git
 cd stl-to-obj-master
 python setup.py install
+```
+
+### Usage
+```py
+from stl2obj import Stl2Obj
+
+stl = 'path-to-stl-file'
+obj = 'path-to-obj-file'
+callback = lambda code: print(code)
+
+Stl2Obj().convert(stl, obj, callback)
 ```
 
 ### Authors
