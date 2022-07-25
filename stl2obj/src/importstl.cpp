@@ -27,7 +27,6 @@ VectorND<> read<VectorND<>>(std::ifstream& stream)
 
 void ImportSTL::load(Geometry& model)
 {
-    double c;
     // let's time the STL import
     auto t0 = std::chrono::high_resolution_clock::now();
 
