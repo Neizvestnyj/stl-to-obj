@@ -11,10 +11,11 @@
 
 using namespace std;
 
-void convert(string src, string dst, void(*callback)(int, void*), void* py_object) {
+void convert(string src, string dst, void(*callback)(int, void*) = NULL, void* py_object = NULL) {
     /*
-    src - full path to stl file
-    dst - full path to obj file
+    `src` - full path to stl file
+    `dst` - full path to obj file
+    `callback` - just function, that call pointer like `py_object`
     */
 
     int code;
