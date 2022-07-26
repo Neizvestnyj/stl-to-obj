@@ -47,6 +47,19 @@ callback = lambda code: print(code)
 Stl2Obj().convert(stl, obj, callback)
 ```
 
+### Usage with [python-for-android](https://github.com/kivy/python-for-android)
+**buildozer.spec**
+```
+requirements = kivy, stl2obj
+p4a.local_recipes = <path-to-stl2obj-recipe-folder>
+```
+
+```bash
+buildozer android debug deploy run logcat
+```
+
+or just copy *recipes* to *examples/kivy_example* folder and run `buildozer android debug deploy run logcat`
+
 ### Authors
 
 [Neizvestnyj](https://github.com/Neizvestnyj), [psychowasp](https://github.com/psychowasp), [Amir Baserinia](https://github.com/baserinia)
