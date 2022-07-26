@@ -1,29 +1,31 @@
 #include <iostream>
 #include <math.h>
 
+using namespace std;
+
 float old_progress = 0.0;
 
-void progress(float current, float total, std::string text = "") {
+void progress(float current, float total, string text = "") {
     int barWidth = 70;
     float progress = current / total;
     progress = round(progress * 100) / 100;
 
     if (old_progress != progress) {
         old_progress = progress;
-        std::cout << text << "[";
+        cout << text << "[";
         int pos = barWidth * progress;
         for (int i = 0; i < barWidth; ++i) {
             if (i < pos) {
-                std::cout << "=";
+                cout << "=";
             }
             else if(i == pos) {
-                std::cout << ">";
+                cout << ">";
             }
             else {
-                std::cout << " ";
+                cout << " ";
             }
         }
-        std::cout << "] " << int(progress * 100) << " %\r";
-        std::cout.flush();
+        cout << "] " << int(progress * 100) << " %\r";
+        cout.flush();
     }
 }
