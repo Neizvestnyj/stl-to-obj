@@ -37,13 +37,15 @@ void convert(string src, string dst, void(*callback)(int, void*) = NULL, void* p
     }
 
     if (callback && py_object) {
+        // for python lib `callback` written in c, `py_object` - pointer to python function
         callback(code, py_object);
     }
 }
 
-
+// only for example
 void test_callback(int code, void* call_object) {
     // just callback, that call other c++ function pointer. In python `call_object` - pointer to python function
+
     typedef void (*func_ptr)(int);
 
     void* object_pointer = call_object;
@@ -51,6 +53,7 @@ void test_callback(int code, void* call_object) {
     object_func(code);
 }
 
+// only for example
 void test_call_object(int code) {
     cout << "Object callback: " << code << endl;
 }
