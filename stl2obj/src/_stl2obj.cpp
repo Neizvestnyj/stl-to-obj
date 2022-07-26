@@ -7,7 +7,6 @@
 #include "importstl.h"
 #include "exportobj.h"
 #include "_stl2obj.h"
-#include "exists.h"
 
 using namespace std;
 
@@ -19,22 +18,16 @@ void convert(string src, string dst, void(*callback)(int, void*) = NULL, void* p
     */
 
     int code;
-    
-    if (is_file_exist(src) == true) { // the best way to check this is in cython
-        //  create a geometry tesselation object
-        Geometry tessel;
+    //  create a geometry tesselation object
+    Geometry tessel;
 
-        //  fill up the tesselation object with STL data (load STL)
-        tessel.visit(ImportSTL(src));
+    //  fill up the tesselation object with STL data (load STL)
+    tessel.visit(ImportSTL(src));
 
-        //  write down the tesselation object into OBJ file (save OBJ)
-        tessel.visit(ExportOBJ(dst));
-        code = 0;
-    }
-    else {
-        cout << src << " does not exists" << endl;
-        code = 1;
-    }
+    //  write down the tesselation object into OBJ file (save OBJ)
+    tessel.visit(ExportOBJ(dst));
+
+    code = 0;
 
     if (callback && py_object) {
         // for python lib `callback` written in c, `py_object` - pointer to python function
