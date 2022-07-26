@@ -5,17 +5,18 @@ It is powerful python tool to convert stl file to obj using c++ in backend and b
 with cython for all platforms
 
 ## Build pure c++
-1) Install [CMake](https://cmake.org/install/).
-2) Then run `build.cmd` for **Windows** and in `build\Debug` folder you will find **exe** file
-or run `sh build.sh` for **Linux/macOS** and you find will runnable `stl2obj` in `build` folder.
-3) In terminal type 
+1. Install [CMake](https://cmake.org/install/)
+2. Then run
+    1. **Winows:** `build.cmd` and in `build\Debug` folder you will find **exe** file
+    2. **Linux/macOS:** `sh build.sh` and you will find runnable `stl2obj` in `build` folder
+3. In terminal type 
 ```bash
 # Windows
 stl2obj.exe <src> <dst>
 # Linux/MacOS
 ./stl2obj <src> <dst>
 ```
-4) Enjoy fast conversion!
+4. Enjoy fast conversion!
 
 ## Installation
 From [pypi](https://pypi.org/project/stl-obj-convertor/)
