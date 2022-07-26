@@ -34,21 +34,15 @@ with open(os.path.join(current_dir, 'requirements.txt')) as req_f:
     for line in lines:
         requirements.append(line.replace('\n', '').strip())
 
-cpp_sources = [
-    "exportobj.cpp",
-    "importstl.cpp",
-    "progress.cpp",
-    "_stl2obj.cpp",
-    "exists.cpp",
-]
+cpp_sources = []
 path_to_src = os.path.join(stl2obj_dir, 'src')
 
 # check if all files are included
 for file in os.listdir(path_to_src):
     name, ext = os.path.splitext(file)
 
-    if ext == '.cpp' and file not in cpp_sources:
-        print(f'{file} does not included')
+    if ext == '.cpp':
+        cpp_sources.append(file)
 
 additional_files = [os.path.join(path_to_src, src) for src in cpp_sources]
 
