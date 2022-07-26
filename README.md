@@ -75,7 +75,8 @@ pip install git+https://github.com/kivy/kivy-ios.git
 
 **in console**
 ```bash
-toolchain build python3 kivy stl2obj --add-custom-recipe=recipes/ios/stl2obj
+toolchain build python3 kivy
+toolchain build stl2obj --add-custom-recipe=recipes/ios/stl2obj
 toolchain create Stl-to-obj examples/kivy_example
 ```
 
