@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.lang.builder import Builder
 from kivy.uix.modalview import ModalView
 from kivy.logger import Logger
+from kivy.graphics.vertex_instructions import GraphicException
 
 from render import Renderer
 
@@ -88,7 +89,7 @@ class TestApp(App):
                 self.view.add_widget(self.render)
 
             self.view.open()
-        except OverflowError as e:
+        except (OverflowError, GraphicException) as e:
             # https://github.com/kivy/kivy/issues/7105#issuecomment-1195393114
             Logger.critical(msg=f'{e}')
 
