@@ -1,10 +1,10 @@
 # stl-to-obj
 
-### What is it?
+## What is it?
 It is powerful python tool to convert stl file to obj using c++ in backend and built 
 with cython for all platforms
 
-### Build pure c++
+## Build pure c++
 1) Install [CMake](https://cmake.org/install/).
 2) Then run `build.cmd` for **Windows** and in `build\Debug` folder you will find **exe** file
 or run `sh build.sh` for **Linux/macOS** and you find will runnable `stl2obj` in `build` folder.
@@ -17,7 +17,7 @@ stl2obj.exe <src> <dst>
 ```
 4) Enjoy fast conversion!
 
-### Installation
+## Installation
 From [pypi](https://pypi.org/project/stl-obj-convertor/)
 ```bash
 pip install stl2obj
@@ -36,7 +36,7 @@ cd stl-to-obj-master
 python setup.py install
 ```
 
-### Usage
+## Usage
 ```py
 from stl2obj import Stl2Obj
 
@@ -47,19 +47,38 @@ callback = lambda code: print(code)
 Stl2Obj().convert(stl, obj, callback)
 ```
 
-### Usage with [python-for-android](https://github.com/kivy/python-for-android)
-**buildozer.spec**
+## Usage with [python-for-android](https://github.com/kivy/python-for-android)
+### Installation
+```bash
+pip install buildozer
+```
+
+### buildozer.spec
 ```
 requirements = kivy, stl2obj
 p4a.local_recipes = <path-to-stl2obj-recipe-folder>
 ```
 
+**in console**
 ```bash
 buildozer android debug deploy run logcat
 ```
 
 or just copy *recipes* to *examples/kivy_example* folder and run `buildozer android debug deploy run logcat`
 
-### Authors
+## Usage with [kivy-ios](https://github.com/kivy/kivy-ios)
+### Installation
+
+```bash
+pip install git+https://github.com/kivy/kivy-ios.git
+```
+
+**in console**
+```bash
+toolchain build python3 kivy stl2obj --add-custom-recipe=recipes/ios/stl2obj
+toolchain create Stl-to-obj examples/kivy_example
+```
+
+## Authors
 
 [Neizvestnyj](https://github.com/Neizvestnyj), [psychowasp](https://github.com/psychowasp), [Amir Baserinia](https://github.com/baserinia)
