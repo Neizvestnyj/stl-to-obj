@@ -25,6 +25,12 @@ jobs:
             architecture: x64
             target: Macos
             
+          - os: windows-latest
+            python-version: 3.9
+            dist: sdist bdist_wheel
+            architecture: x64
+            target: Windows
+            
     runs-on: ${{ matrix.os }}
     env:
       PYTHONUNBUFFERED: 1
