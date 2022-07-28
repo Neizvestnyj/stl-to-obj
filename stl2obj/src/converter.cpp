@@ -6,7 +6,7 @@
 #include "geometry.h"
 #include "importstl.h"
 #include "exportobj.h"
-#include "_stl2obj.h"
+#include "converter.h"
 
 using namespace std;
 
