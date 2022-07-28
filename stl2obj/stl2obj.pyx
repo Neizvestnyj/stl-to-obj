@@ -6,7 +6,7 @@ from os.path import exists
 from pathlib import Path
 
 # Redeclare the .h in cython space
-cdef extern from "src/_stl2obj.h":
+cdef extern from "src/converter.h":
     void convert(
         string src,
         string dst,
