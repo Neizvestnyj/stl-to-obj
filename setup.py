@@ -1,17 +1,34 @@
 from setuptools import setup, Extension
 
-import sys
 import os
 from pathlib import Path
-import platform
+import sys
+from os import environ
 
-try:
-    from Cython.Build import cythonize
-except (ImportError, ModuleNotFoundError) as import_cython_error:
-    sys.exit(
-        "Cython not found. Cython is needed to build the extension modules. "
-        "Type: `pip install cython` or `pip install -r requirements.txt`"
-    )
+platform = sys.platform
+
+ndkplatform = environ.get('NDKPLATFORM')
+if ndkplatform is not None and environ.get('LIBLINK'):
+    platform = 'android'
+
+kivy_ios_root = environ.get('KIVYIOSROOT', None)
+
+if kivy_ios_root is not None:
+    platform = 'ios'
+
+can_use_cython = True
+
+extra_compile_args = []
+if platform in ('ios', 'android'):
+    # NEVER use or declare cython on these platforms
+    print('Not using cython on %s' % platform)
+    can_use_cython = False
+else:
+    if platform == 'darwin':
+        # but '-std=c++11' is necessary
+        extra_compile_args = ['-stdlib=libc++']
+    else:
+        extra_compile_args = ['-std=c++11']
 
 __version__ = '0.1'
 __name__ = 'stl2obj'
@@ -19,13 +36,6 @@ __name__ = 'stl2obj'
 current_dir = Path(__file__).absolute().parent
 stl2obj_dir = os.path.join(current_dir, __name__)
 print(f"{__name__} directory: {stl2obj_dir}")
-
-if platform.system() == 'Windows':
-    extra_compile_args = []
-elif platform.system() == 'Darwin':
-    extra_compile_args = ['-std=c++11', '-stdlib=libc++']
-else:
-    extra_compile_args = ['-std=c++11']
 
 with open(os.path.join(current_dir, 'requirements.txt')) as req_f:
     requirements = []
@@ -54,6 +64,19 @@ extensions = [
               ),
 ]
 
+if can_use_cython:
+    try:
+        from Cython.Build import cythonize
+    except (ImportError, ModuleNotFoundError) as import_cython_error:
+        sys.exit(
+            "Cython not found. Cython is needed to build the extension modules. "
+            "Type: `pip install cython` or `pip install -r requirements.txt`"
+        )
+
+    ext_modules = cythonize(extensions)
+else:
+    ext_modules = extensions
+
 setup(name=__name__,
       version=__version__,
       author="Neizvestnyj",
@@ -62,7 +85,7 @@ setup(name=__name__,
       platforms=['all'],
       license='GPL-3.0 License',
       keywords=["python c++ cython std2obj"],
-      ext_modules=cythonize(extensions),
+      ext_modules=ext_modules,
       install_requires=requirements,
       # Disable zip_safe, because:
       #   - Cython won't find `.pxd` files inside installed .egg, hard to compile libs depending on this one
