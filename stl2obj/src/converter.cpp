@@ -47,6 +47,7 @@ void convert(
     }
 }
 
+
 // only for example
 void test_callback(int code, void* call_object) {
     // just callback, that call other c++ function pointer. In python `call_object` - pointer to python function

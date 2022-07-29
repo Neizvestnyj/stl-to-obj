@@ -24,26 +24,31 @@ int lead_value(float current, float total) {
     }
 }
 
-void progress(float current, float total, string text = "") {
+void display_progress(int progress, string text = "") {
     int barWidth = 70;
+
+    cout << text << "[";
+    int pos = barWidth * progress;
+    for (int i = 0; i < barWidth; ++i) {
+        if (i < pos) {
+            cout << "=";
+        }
+        else if (i == pos) {
+            cout << ">";
+        }
+        else {
+            cout << " ";
+        }
+    }
+    cout << "] " << progress << " %\r";
+    cout.flush();
+}
+
+void progress(float current, float total, string text = "") {
     int progress = lead_value(current, total);
 
     if (progress != -1) {
-        cout << text << "[";
-        int pos = barWidth * progress;
-        for (int i = 0; i < barWidth; ++i) {
-            if (i < pos) {
-                cout << "=";
-            }
-            else if(i == pos) {
-                cout << ">";
-            }
-            else {
-                cout << " ";
-            }
-        }
-        cout << "] " << progress << " %\r";
-        cout.flush();
+        display_progress(progress, text);
     }
 
 }

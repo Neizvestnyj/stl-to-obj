@@ -70,16 +70,15 @@ void ImportSTL::load(Geometry& model)
         char dummy[2];
         fileSTL.read(dummy, 2);
 
-        if (callback_ && py_progress_)
-        { 
-            int progress = lead_value(current, total);
-            if (progress != -1) {
-                callback_(progress, py_progress_);
-            }
-        }
-        else
+        int progress_val = lead_value(current, total);
+
+        if (progress_val != -1)
         {
-            progress(current, total, "Converting ");
+            if (callback_ && py_progress_) {
+                callback_(progress_val, py_progress_);
+            }
+            
+            display_progress(progress_val, "Converting ");
         }
             
     }
