@@ -22,10 +22,10 @@ cdef extern from "src/converter.h":
 cdef void c_callback(int result, void* py_object) with gil:
     # or (<object>py_object)(result)
     cdef object func = <object>py_object
-    func(result)
 
-cdef void empty_c_callback(int result, void* py_object) with gil:
-    pass
+    # check if func is not None
+    if func:
+        func(result)
 
 cdef class Stl2Obj:
     def convert(self,
@@ -46,13 +46,15 @@ cdef class Stl2Obj:
         cdef string cpp_dst = <string>dst.encode('utf-8')
         cdef bool cpp_debug = <bool>debug
 
+        """
+        converts python object to `void*`
+        everything in python is a Object, even `None`
+        so if you pass `None` as object and it converts it to `void*`
+        then your callback must check it.
+        Look in -> `cdef void c_callback(int result, void* py_object) with gil:`
+        """
         cdef void* callback_ptr = <void*>callback
         cdef void* progress_ptr = <void*>progress_callback
 
-        if not callback:
-            void_callback = empty_c_callback
-        else:
-            void_callback = c_callback
-
         with nogil:
-            convert(cpp_src, cpp_dst, cpp_debug, void_callback, callback_ptr, progress_ptr)
+            convert(cpp_src, cpp_dst, cpp_debug, c_callback, callback_ptr, progress_ptr)
