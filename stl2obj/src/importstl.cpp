@@ -1,13 +1,17 @@
 #include <fstream>
 #include <chrono>
+#include <vector>
+#include <algorithm>
 
 #include "importstl.h"
 #include "vectornd.h"
 #include "kdtree.h"
 #include "progress.h"
 
+using namespace std;
+
 template<typename T>
-T read(std::ifstream& stream)
+T read(ifstream& stream)
 {
     char buffer[sizeof(T)];
     stream.read(buffer, sizeof(T));
@@ -16,7 +20,7 @@ T read(std::ifstream& stream)
 
 // specialization
 template<>
-VectorND<> read<VectorND<>>(std::ifstream& stream)
+VectorND<> read<VectorND<>>(ifstream& stream)
 {
     return VectorND<>(
         read<float>(stream),
@@ -28,9 +32,9 @@ VectorND<> read<VectorND<>>(std::ifstream& stream)
 void ImportSTL::load(Geometry& model)
 {
     // let's time the STL import
-    auto t0 = std::chrono::high_resolution_clock::now();
+    auto t0 = chrono::high_resolution_clock::now();
 
-    std::ifstream fileSTL (filename_.c_str(), std::ios::in | std::ios::binary);
+    ifstream fileSTL (filename_.c_str(), ios::in | ios::binary);
 
     char header[80];
     fileSTL.read (header, 80);
@@ -38,13 +42,15 @@ void ImportSTL::load(Geometry& model)
     char numStr[4];
     fileSTL.read(numStr, 4);
     unsigned numOfTris = *(uint32_t*)numStr;
-    std::cout << "Reading " << numOfTris << " triangles ..." << std::endl;
+    cout << "Reading " << numOfTris << " triangles ..." << endl;
 
     // build search tree
     KDTree<3> tree;
     for (unsigned i = 0; i < numOfTris; i++) {
            // read the normal vector but ignore it.
         auto norm = read<VectorND<>>(fileSTL);
+        float current = i;
+        float total = numOfTris - 1;
 
         for (unsigned j = 0; j < 3; j++) {
             unsigned index;
@@ -63,17 +69,29 @@ void ImportSTL::load(Geometry& model)
         // skip 2 bytes of dummy data
         char dummy[2];
         fileSTL.read(dummy, 2);
-        progress((float)i, (float)numOfTris - 1, "Converting ");
+
+        if (callback_ && py_progress_)
+        { 
+            int progress = lead_value(current, total);
+            if (progress != -1) {
+                callback_(progress, py_progress_);
+            }
+        }
+        else
+        {
+            progress(current, total, "Converting ");
+        }
+            
     }
-    std::cout << std::endl;
+    cout << endl;
 
-    std::cout << "Points reduced from " << 3 * numOfTris << " to " << 
-        tree.size() << " after merging!" << std::endl;
+    // cout << "Points reduced from " << 3 * numOfTris << " to " << 
+    //   tree.size() << " after merging!" << endl;
 
-    std::chrono::duration<double> duration = 
-        std::chrono::high_resolution_clock::now() - t0;
-    std::cout << "Finished reading STL in " << (double)duration.count() <<
-        " seconds!" << std::endl;
+    chrono::duration<double> duration = 
+        chrono::high_resolution_clock::now() - t0;
+    cout << "Finished reading STL in " << (double)duration.count() <<
+        " seconds!" << endl;
         
 
 }

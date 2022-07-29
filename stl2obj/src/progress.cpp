@@ -5,13 +5,30 @@ using namespace std;
 
 float old_progress = 0.0;
 
-void progress(float current, float total, string text = "") {
-    int barWidth = 70;
+int lead_value(float current, float total) {
+    /*
+    if return -1, no need to update value, else int progress value
+    */
+
     float progress = current / total;
     progress = round(progress * 100) / 100;
 
     if (old_progress != progress) {
         old_progress = progress;
+
+        return int(progress * 100);
+    }
+    else
+    {
+        return -1;
+    }
+}
+
+void progress(float current, float total, string text = "") {
+    int barWidth = 70;
+    int progress = lead_value(current, total);
+
+    if (progress != -1) {
         cout << text << "[";
         int pos = barWidth * progress;
         for (int i = 0; i < barWidth; ++i) {
@@ -25,7 +42,8 @@ void progress(float current, float total, string text = "") {
                 cout << " ";
             }
         }
-        cout << "] " << int(progress * 100) << " %\r";
+        cout << "] " << progress << " %\r";
         cout.flush();
     }
+
 }

@@ -7,14 +7,22 @@
 #include "visitor.h"
 #include "geometry.h"
 
-class ImportSTL : public Visitor<Geometry> {
-    std::string filename_;
+using namespace std;
+
+class ImportSTL: public Visitor<Geometry> {
+    string filename_;
+    void(*callback_)(int, void*);
+    void* py_progress_;
+
 public:
-    ImportSTL(const std::string& filename) : 
-        filename_(filename) {}
+    ImportSTL(const string& filename, void(*callback)(int, void*) = NULL, void* py_progress = NULL) :
+        filename_(filename),
+        py_progress_(py_progress),
+        callback_(callback) {}
+ 
 
     void dispatch(Geometry& model) override {
-        std::cout << "Loading STL file \"" << filename_ << "\"" << std::endl;
+        cout << "Loading STL file \"" << filename_ << "\"" << endl;
         load(model);
     }
     

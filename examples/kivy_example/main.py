@@ -33,10 +33,13 @@ BoxLayout:
                 text: 'Dolphin.obj'
                 size_hint_y: None
                 height: self.minimum_height
+                
+            ProgressBar:
+                id: pb
             
             Widget:
                 size_hint_y: None
-                height: max(root.height - dp(100) - field_obj.height * 2 - dp(20 * 4) - dp(20 * 2), dp(10))
+                height: max(root.height - dp(100) - field_obj.height * 2 - dp(20 * 5) - dp(20 * 2), dp(10))
                 
             Button:
                 id: run
@@ -72,12 +75,16 @@ class TestApp(App):
         stl = self.get_file(self.root.ids.field_stl.text)
         obj = self.get_file(self.root.ids.field_obj.text)
 
-        Stl2Obj().convert(stl, obj, self.callback)
+        Stl2Obj().convert(src=stl, dst=obj, debug=False, callback=self.callback, progress_callback=self.progress)
         print('Conversion done')
 
     def callback(self, code: int):
         self.root.ids.run.disabled = False
+        self.root.ids.pb.value = 0
         print(code)
+
+    def progress(self, value: int):
+        self.root.ids.pb.value = value
 
     def preview(self):
         try:

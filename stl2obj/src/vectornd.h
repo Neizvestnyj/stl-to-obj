@@ -3,6 +3,7 @@
 #pragma once
 
 #include <cmath>
+using namespace std;
 
 // interface
 
@@ -231,7 +232,7 @@ template <unsigned DIM, typename REAL>
 REAL
 VectorND<DIM, REAL>::get_magnit() const
 {
-    return std::sqrt(get_magnit_sqr());
+    return sqrt(get_magnit_sqr());
 }
 
 

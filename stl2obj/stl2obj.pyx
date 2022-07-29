@@ -2,6 +2,7 @@
 # distutils: language=c++
 
 from libcpp.string cimport string
+from libcpp cimport bool
 from os.path import exists
 from pathlib import Path
 
@@ -10,9 +11,11 @@ cdef extern from "src/converter.h":
     void convert(
         string src,
         string dst,
+        bool debug,
         void(*callback)(int, void*),
-        void* py_object
-    ) nogil #your .h and .cpp must be like this also
+        void* py_object,
+        void* py_progress
+        ) nogil #your .h and .cpp must be like this also
 
 # c callback to call python callback
 cdef void c_callback(int result, void* py_object) with gil:
@@ -24,7 +27,12 @@ cdef void empty_c_callback(int result, void* py_object) with gil:
     pass
 
 cdef class Stl2Obj:
-    def convert(self, src: str, dst: str, callback: object = None):
+    def convert(self,
+                src: str,
+                dst: str,
+                debug: bool = True,
+                callback: object = None,
+                progress_callback: object = None):
         if not exists(src):
             raise FileNotFoundError(f'{src} does not exists')
 
@@ -35,7 +43,10 @@ cdef class Stl2Obj:
 
         cdef string cpp_src = <string>src.encode('utf-8')
         cdef string cpp_dst = <string>dst.encode('utf-8')
+        cdef bool cpp_debug = <bool>debug
+
         cdef void* callback_ptr = <void*>callback
+        cdef void* progress_ptr = <void*>progress_callback
 
         if not callback:
             void_callback = empty_c_callback
@@ -43,4 +54,4 @@ cdef class Stl2Obj:
             void_callback = c_callback
 
         with nogil:
-            convert(cpp_src, cpp_dst, void_callback, callback_ptr)
+            convert(cpp_src, cpp_dst, cpp_debug, void_callback, callback_ptr, progress_ptr)

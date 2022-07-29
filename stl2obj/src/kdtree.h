@@ -6,13 +6,15 @@
 #include <vector>
 #include "vectornd.h"
 
+using namespace std;
+
 template <int DIM, typename Real = double>
 class KDTree {
-//  define Point type for convenience
+    //  define Point type for convenience
     using Point = VectorND<DIM, Real>;
 
-//  define Node type for private operations on the tree. No one should use
-//  this outside KDTree
+    //  define Node type for private operations on the tree. No one should use
+    //  this outside KDTree
     class Node {
         Node(int id, int8_t axis = 0) : id_(id), axis_(axis) {}
         ~Node() { delete left_; delete right_; }
@@ -25,45 +27,45 @@ class KDTree {
 
     using NodePtr = Node*;
 
-//  pointer to the root node
+    //  pointer to the root node
     Node* root_ = nullptr;
 
-//  vector of all points; this can dynamically grow or shrink
-//  Note that this is the sinle data structure for storing points data. The
-//  tree has access only to elements of this vector, but there is no point
-//  data in the tree. This simplifies the algorithms and makes the API
-//  easier to use.
-    std::vector<Point> data_;
+    //  vector of all points; this can dynamically grow or shrink
+    //  Note that this is the sinle data structure for storing points data. The
+    //  tree has access only to elements of this vector, but there is no point
+    //  data in the tree. This simplifies the algorithms and makes the API
+    //  easier to use.
+    vector<Point> data_;
 
 public: // methos
-//  default constructor
+    //  default constructor
     KDTree() = default;
 
-//  default destructor
+    //  default destructor
     ~KDTree() { delete root_; }
 
-//  delete copy constructor, assignment operator, move constructor, and
-//  move assignment operator. we don't want someone accidentally copies a
-//  search tree
+    //  delete copy constructor, assignment operator, move constructor, and
+    //  move assignment operator. we don't want someone accidentally copies a
+    //  search tree
     KDTree(const KDTree&) = delete;
     KDTree(KDTree&&) = delete;
     KDTree& operator=(const KDTree&) = delete;
     KDTree& operator=(KDTree&&) = delete;
 
-//  insert a new point into the tree
+    //  insert a new point into the tree
     void insert(const Point& point);
-//  get the current size
+    //  get the current size
     size_t size() { return data_.size(); }
 
-//  This function is N^2 so it's very inefficient. It's included only for
-//  testing purpose to confirm the correctness of algorithm. Otherwise,
-//  it shouldn't be used in actual code.
+    //  This function is N^2 so it's very inefficient. It's included only for
+    //  testing purpose to confirm the correctness of algorithm. Otherwise,
+    //  it shouldn't be used in actual code.
     int findNearestBruteForce(const Point& pt);
 
-//  This function is NlogN, so it should be used in actual code.
+    //  This function is NlogN, so it should be used in actual code.
     int findNearest(const Point& pt);
 
-//  return the point from its id
+    //  return the point from its id
     Point getPoint(int index) {
         return data_[index];
     }
@@ -165,7 +167,7 @@ int
 KDTree<DIM, Real>::findNearestBruteForce(const Point& pt)
 {
     int index = -1;
-    Real minD2 = std::numeric_limits<Real>::max();
+    Real minD2 = numeric_limits<Real>::max();
     for (int i = 0; i < data_.size(); i++) {
         Real d2 = Point::get_dist_sqr(pt, data_[i]);
         if (d2 < minD2) {

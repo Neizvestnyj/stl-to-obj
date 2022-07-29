@@ -7,14 +7,16 @@
 #include "visitor.h"
 #include "geometry.h"
 
+using namespace std;
+
 class ExportOBJ : public Visitor<Geometry> {
-    std::string filename_;
+    string filename_;
 public:
-    ExportOBJ(const std::string& filename) :
+    ExportOBJ(const string& filename) :
         filename_(filename) {}
 
     void dispatch(Geometry& model) override {
-        std::cout << "Saving OBJ file: \"" << filename_ << "\"" << std::endl;
+        cout << "Saving OBJ file: \"" << filename_ << "\"" << endl;
         save(model);
     }
 
