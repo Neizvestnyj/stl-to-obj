@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "stl2obj"
+version = "0.1"
+description = "C++ std to obj converter for Python"
+authors = ["Neizvestnyj <pikromat1995@gmail.com>"] 
+license = "GPL-3.0-or-later"
+readme = "README.md"
+
+keywords = ["python", "c++", "cython", "std2obj"] 
+
+classifiers = [
+    "Topic :: Software Development",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+[tool.poetry.dependencies]
+python = "^3.6"
+Cython = ">=0.29.21"
+
+[project.urls]
+homepage = "https://github.com/Neizvestnyj/stl-to-obj"
+documentation = "https://github.com/Neizvestnyj/stl-to-obj/README.md"
+repository = "https://github.com/Neizvestnyj/stl-to-obj" 
+
+[build-system]
+requires = ["setuptools>=61.2", "wheel", "cython>=0.29"]
