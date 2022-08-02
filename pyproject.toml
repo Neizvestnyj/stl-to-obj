@@ -6,7 +6,7 @@ authors = ["Neizvestnyj <pikromat1995@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 
-keywords = ["python", "c++", "cython", "std2obj"] 
+keywords = ["python c++ cython std2obj"] 
 
 classifiers = [
     "Topic :: Software Development",
