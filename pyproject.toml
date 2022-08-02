@@ -6,8 +6,6 @@ authors = ["Neizvestnyj <pikromat1995@gmail.com>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 
-keywords = ["python c++ cython std2obj"] 
-
 classifiers = [
     "Topic :: Software Development",
     "Topic :: Software Development :: Libraries :: Python Modules"
@@ -33,4 +31,3 @@ repository = "https://github.com/Neizvestnyj/stl-to-obj"
 
 [build-system]
 requires = ["setuptools>=61.2", "wheel", "cython>=0.29"]
-
