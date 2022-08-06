@@ -23,7 +23,7 @@ stl2obj.exe <src> <dst>
 4. Enjoy fast conversion!
 
 ## Installation
-From [pypi](https://pypi.org/project/stl-obj-convertor/)
+From [pypi](https://pypi.org/project/stl2obj/)
 ```bash
 pip install stl2obj
 ```
