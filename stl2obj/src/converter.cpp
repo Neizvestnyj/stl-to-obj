@@ -5,6 +5,7 @@
 #include "importstl.h"
 #include "exportobj.h"
 #include "converter.h"
+#include "check_mode.h"
 
 using namespace std;
 
@@ -16,16 +17,22 @@ void convert(
     void* py_callback = NULL, 
     void* py_progress = NULL) {
     /*
-    `src` - full path to stl file
+    `src` - full path to stl file in binary format
     `dst` - full path to obj file
     `callback` - just function, that call pointer like `py_object`
     */
+    string mode = get_stl_mode(src);
 
     if (debug == false) {
         streambuf* old = cout.rdbuf();
         cout.rdbuf(0);
-    } 
-
+    }
+    
+    if (mode == "ASCII") {
+        cout << "File must be in BIN format" << endl;
+        return;
+    }
+ 
     int code;
 
     //  create a geometry tesselation object
