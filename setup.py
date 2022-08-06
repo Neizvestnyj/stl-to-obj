@@ -13,7 +13,7 @@ except (ImportError, ModuleNotFoundError) as import_cython_error:
         "Type: `pip install cython` or `pip install -r requirements.txt`"
     )
 
-__version__ = '0.1'
+__version__ = '0.2dev0'
 __name__ = 'stl2obj'
 
 current_dir = Path(__file__).absolute().parent
