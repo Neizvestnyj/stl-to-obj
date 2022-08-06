@@ -75,12 +75,23 @@ class TestApp(App):
         stl = self.get_file(self.root.ids.field_stl.text)
         obj = self.get_file(self.root.ids.field_obj.text)
 
-        Stl2Obj().convert(src=stl, dst=obj, debug=False, callback=self.callback, progress_callback=self.progress)
-        print('Conversion done')
+        try:
+            Stl2Obj().convert(src=stl, dst=obj, debug=False, callback=self.callback, progress_callback=self.progress)
+            print('Conversion done')
+        except (FileNotFoundError, TypeError) as e:
+            self.reset_widgets()
+            print(e)
 
-    def callback(self, code: int):
+    def reset_widgets(self):
         self.root.ids.run.disabled = False
         self.root.ids.pb.value = 0
+
+    def callback(self, code: int):
+        self.reset_widgets()
+
+        if code == -1:
+            raise TypeError
+
         print(code)
 
     def progress(self, value: int):
