@@ -37,6 +37,12 @@ cdef class Stl2Obj:
         if not exists(src):
             raise FileNotFoundError(f'{src} does not exists')
 
+        if Path(src).suffix != '.stl':
+            raise TypeError(f'{src} have invalid type, must be stl')
+
+        if Path(dst).suffix != '.obj':
+            raise TypeError(f'{src} have invalid type, must be obj')
+
         p = Path(dst)
 
         if not exists(p.parent):
