@@ -42,7 +42,7 @@ int main(int argc, char** argv)
     cout << src << " will be converted and save as " << dst << endl;
 
     void* vp = (void*)test_call_object; // void pointer
-    void* vpp = (void*)test_py_progress; //void progress pointer
+    void* vpp = (void*)test_py_progress; // void progress pointer
 
     // convert(src, dst, &test_callback, vp, vpp);
     convert(src, dst, true, &test_callback, vp, NULL);
