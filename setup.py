@@ -64,6 +64,7 @@ setup(name=__name__,
       keywords=["python c++ cython std2obj"],
       ext_modules=cythonize(extensions),
       install_requires=requirements,
+      include_package_data=True,
       # Disable zip_safe, because:
       #   - Cython won't find `.pxd` files inside installed .egg, hard to compile libs depending on this one
       #   - dynamic loader may need to have the library unzipped to a temporary directory anyway (at import time)
