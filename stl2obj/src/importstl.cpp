@@ -91,7 +91,5 @@ void ImportSTL::load(Geometry& model)
         chrono::high_resolution_clock::now() - t0;
     cout << "Finished reading STL in " << (double)duration.count() <<
         " seconds!" << endl;
-        
-
 }
 
