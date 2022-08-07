@@ -72,12 +72,6 @@ extensions = [
 
 setup(name=__name__,
       version=get_version(),
-      author="Neizvestnyj",
-      url=f'https://github.com/Neizvestnyj/stl-to-obj',
-      description='C++ std to obj converter for Python',
-      platforms=['all'],
-      license='GPL-3.0 License',
-      keywords=["python c++ cython std2obj"],
       ext_modules=cythonize(extensions),
       install_requires=requirements,
       include_package_data=True,
