@@ -8,8 +8,6 @@
 #include "kdtree.h"
 #include "progress.h"
 
-using namespace std;
-
 template<typename T>
 T read(ifstream& stream)
 {
@@ -31,6 +29,8 @@ VectorND<> read<VectorND<>>(ifstream& stream)
 
 void ImportSTL::load(Geometry& model)
 {
+    int progress_val = 0;
+    int progress_callback_counter = 1;
     // let's time the STL import
     auto t0 = chrono::high_resolution_clock::now();
 
@@ -70,15 +70,22 @@ void ImportSTL::load(Geometry& model)
         char dummy[2];
         fileSTL.read(dummy, 2);
 
-        int progress_val = lead_value(current, total);
+        progress_val = lead_value(current, total);
 
         if (progress_val != -1)
         {
+
             if (callback_ && py_progress_) {
-                callback_(progress_val, py_progress_);
+                if (progress_callback_counter == progress_part_){
+                    callback_(1, py_progress_);
+                    progress_callback_counter = 1;
+                }
+                else {
+                    progress_callback_counter += 1;
+                }
             }
             
-            display_progress(progress_val, "Converting ");
+            display_progress(progress_val, "Converting");
         }
             
     }

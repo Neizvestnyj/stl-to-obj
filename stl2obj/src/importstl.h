@@ -11,11 +11,17 @@ using namespace std;
 
 class ImportSTL: public Visitor<Geometry> {
     string filename_;
+    int progress_part_;
     void(*callback_)(int, void*);
     void* py_progress_;
 
 public:
-    ImportSTL(const string& filename, void(*callback)(int, void*) = NULL, void* py_progress = NULL) :
+    ImportSTL(const string& filename, 
+        void(*callback)(int, void*) = NULL, 
+        void* py_progress = NULL, 
+        int progress_part = 1) :
+
+        progress_part_(progress_part),
         filename_(filename),
         py_progress_(py_progress),
         callback_(callback) {}
