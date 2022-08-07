@@ -36,13 +36,15 @@ string get_stl_mode(string file) {
 
 }
 
-int stl_mode_converter(string input_fname, 
-                       string output_fname, 
-                       string mode = "AUTO", 
+int stl_mode_converter(string input_fname,
+                       string output_fname,
+                       string mode = "AUTO",
                        int progress_part = 1,
                        void(*callback)(int, void*) = NULL,
                        void* py_callback = NULL,
-                       void* py_progress = NULL) {
+                       void* py_progress = NULL,
+                       const bool is_next = false
+) {
     /*
     input_fname - path to stl input file
     output_fname - path to stl output file
@@ -242,7 +244,7 @@ int stl_mode_converter(string input_fname,
     if (input_stream.is_open()) input_stream.close();
     if (output_stream.is_open()) output_stream.close();
 
-    if (callback && py_callback) {
+    if (callback && py_callback && is_next == false) {
         callback(retcode, py_callback);
     }
 

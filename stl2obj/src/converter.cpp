@@ -36,7 +36,7 @@ void convert(
         progress_part = 2;
 
         tmp_src = split_filename(src, "dir") + "tmp.stl";
-        int res = stl_mode_converter(src, tmp_src, "ASCII", progress_part, callback, py_callback, py_progress);
+        int res = stl_mode_converter(src, tmp_src, "ASCII", progress_part, callback, py_callback, py_progress, true);
 
         if (res != 0) {
             code = 1;

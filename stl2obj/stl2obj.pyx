@@ -15,7 +15,8 @@ cdef extern from "src/converter.h":
         bool debug,
         void(*callback)(int, void*),
         void* py_object,
-        void* py_progress) nogil #your .h and .cpp must be like this also
+        void* py_progress,
+        ) nogil #your .h and .cpp must be like this also
 
 cdef extern from "src/mode.h":
     int stl_mode_converter(
@@ -25,7 +26,9 @@ cdef extern from "src/mode.h":
         int progress_part,
         void(*callback)(int, void*),
         void* py_object,
-        void* py_progress) nogil #your .h and .cpp must be like this also
+        void* py_progress,
+        bool is_next,
+        ) nogil #your .h and .cpp must be like this also
 
 # c callback to call python callback
 cdef void c_callback(int result, void* py_object) with gil:
@@ -97,10 +100,11 @@ cdef class Stl2Obj:
         cdef string cpp_src = <string>src.encode('utf-8')
         cdef string cpp_dst = <string>dst.encode('utf-8')
         cdef string cpp_mode = <string>mode.encode('utf-8')
+        cdef bool cpp_is_next = False
         cdef int cpp_progress_part = 1
 
         cdef void* callback_ptr = <void*>callback
         cdef void* progress_ptr = <void*>progress_callback
 
         with nogil:
-            stl_mode_converter(cpp_src, cpp_dst, cpp_mode, cpp_progress_part, c_callback, callback_ptr, progress_ptr)
+            stl_mode_converter(cpp_src, cpp_dst, cpp_mode, cpp_progress_part, c_callback, callback_ptr, progress_ptr, cpp_is_next)
