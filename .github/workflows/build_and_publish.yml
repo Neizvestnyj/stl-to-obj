@@ -1,4 +1,4 @@
-name: Build_and_Publish
+name: Build_and_publish
 on:
   push:
   pull_request:
@@ -48,7 +48,7 @@ jobs:
   # Deploy job. Uploads distribution to PyPI (only on tags)
   deploy:
     name: Publish to PyPI
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     needs: build
     if: github.event_name == 'push' && startsWith(github.event.ref, 'refs/tags')
     env:
@@ -62,11 +62,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: dist
-        path: publish_dist
+        path: dist
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@v1.5.1
       with:
         user: __token__
         password: ${{ secrets.PYPI_TOKEN }}
-        packages_dir: publish_dist/
+        packages_dir: dist/
