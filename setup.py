@@ -2,6 +2,7 @@ from setuptools import setup, Extension
 
 import sys
 import os
+import re
 from pathlib import Path
 import platform
 
@@ -13,7 +14,22 @@ except (ImportError, ModuleNotFoundError) as import_cython_error:
         "Type: `pip install cython` or `pip install -r requirements.txt`"
     )
 
-__version__ = '0.2dev0'
+
+def get_version() -> str:
+    """Get __version__ from __init__.py file."""
+
+    version_file = os.path.join(
+        os.path.dirname(__file__), "stl2obj", "__init__.py"
+    )
+    version_file_data = open(version_file, "rt", encoding="utf-8").read()
+    version_regex = r"(?<=^__version__ = ['\"])[^'\"]+(?=['\"]$)"
+    try:
+        version = re.findall(version_regex, version_file_data, re.M)[0]
+        return version
+    except IndexError:
+        raise ValueError(f"Unable to find version string in {version_file}.")
+
+
 __name__ = 'stl2obj'
 
 current_dir = Path(__file__).absolute().parent
@@ -55,7 +71,7 @@ extensions = [
 ]
 
 setup(name=__name__,
-      version=__version__,
+      version=get_version(),
       author="Neizvestnyj",
       url=f'https://github.com/Neizvestnyj/stl-to-obj',
       description='C++ std to obj converter for Python',
