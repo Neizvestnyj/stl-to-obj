@@ -1,7 +1,7 @@
 #include <iostream>
 #include <math.h>
 
-using namespace std;
+#include "progress.h"
 
 float old_progress = 0.0;
 
@@ -25,11 +25,11 @@ int lead_value(float current, float total) {
 }
 
 void display_progress(int progress, string text = "") {
-    int barWidth = 70;
+    int tmp_progress = progress;
 
-    cout << text << "[";
-    int pos = barWidth * progress;
-    for (int i = 0; i < barWidth; ++i) {
+    cout << text << " " << "[";
+    int pos = progress / 2;
+    for (int i = 0; i < 100 / 2; ++i) {
         if (i < pos) {
             cout << "=";
         }
@@ -40,6 +40,7 @@ void display_progress(int progress, string text = "") {
             cout << " ";
         }
     }
+
     cout << "] " << progress << " %\r";
     cout.flush();
 }
