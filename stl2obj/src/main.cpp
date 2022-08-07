@@ -9,11 +9,13 @@ using namespace std;
 void test_callback(int code, void* call_object) {
     // just callback, that call other c++ function pointer. In python `call_object` - pointer to python function
 
-    typedef void (*func_ptr)(int);
+    if (call_object) {
+        typedef void (*func_ptr)(int);
 
-    void* object_pointer = call_object;
-    func_ptr object_func = reinterpret_cast<func_ptr>(object_pointer);
-    object_func(code);
+        void* object_pointer = call_object;
+        func_ptr object_func = reinterpret_cast<func_ptr>(object_pointer);
+        object_func(code);
+    }
 }
 
 // only for example
@@ -44,7 +46,9 @@ int main(int argc, char** argv)
     void* vp = (void*)test_call_object; // void pointer
     void* vpp = (void*)test_py_progress; // void progress pointer
 
+    // you can pass porgress pointer in c++
     // convert(src, dst, &test_callback, vp, vpp);
+    
     convert(src, dst, true, &test_callback, vp, NULL);
 
     return EXIT_SUCCESS;
