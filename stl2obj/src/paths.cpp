@@ -21,14 +21,26 @@ unsigned int FileRead(istream& is, vector <char>& buff) {
     return is.gcount();
 }
 
+template <class InputIterator, class T>
+typename iterator_traits<InputIterator>::difference_type
+base_count(InputIterator first, InputIterator last, const T& val)
+{
+    typename iterator_traits<InputIterator>::difference_type ret = 0;
+    while (first != last) {
+        if (*first == val) ++ret;
+        ++first;
+    }
+    return ret;
+}
+
 int calculate_line_numbers(string file) {
     time_t now = time(0);
     const int SZ = 1024 * 1024;
     std::vector <char> buff(SZ);
     ifstream ifs(file);
     int n = 0;
-    while (int cc = FileRead(ifs, buff)) {
-        n += count(buff.begin(), buff.end(), '\n');
+    while (FileRead(ifs, buff)) {
+        n += base_count(buff.begin(), buff.end(), '\n');
     }
 
     cout << "Calculating takes: " << time(0) - now << endl;
