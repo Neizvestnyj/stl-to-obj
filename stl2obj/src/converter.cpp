@@ -22,7 +22,7 @@ void convert(
     */
 
     int code = 0;
-    int progress_part = 1; // how much progress must pass to trigger `py_progress(1)`
+    int progress_part = 1; // how much progress must pass to trigger (how many iterations of the loop should go through) `py_progress(1)`
     string tmp_src = "";
     string mode = get_stl_mode(src);
 

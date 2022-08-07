@@ -43,6 +43,11 @@ int stl_mode_converter(string input_fname,
                        void(*callback)(int, void*) = NULL,
                        void* py_callback = NULL,
                        void* py_progress = NULL) {
+    /*
+    input_fname - path to stl input file
+    output_fname - path to stl output file
+    mode - if AUTO, programm automaticly detect stl mode ASCII or BIN
+    */
 
     int retcode = 0; // 0 - all fine, 1 - error
     long file_line_number = 0;
@@ -105,7 +110,7 @@ int stl_mode_converter(string input_fname,
 
             getline(input_stream, token);
             token.erase(0, token.find_first_not_of(' '));
-            if (token.size() > 80) throw format_error;
+            if (token.size() > 80) throw format_error; // throw, if file have binary symbols and etc (\x00\x00)
 
             memset(buf, 0, 80);
             copy(token.begin(), token.end(), buf);
