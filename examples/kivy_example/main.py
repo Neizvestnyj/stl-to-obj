@@ -9,9 +9,10 @@ from render import Renderer
 from stl2obj import Stl2Obj
 import pathlib
 import os
+import time
+import threading
 
 KV = """
-#: import Thread threading.Thread
 BoxLayout:
     ScrollView:
         BoxLayout:
@@ -52,14 +53,14 @@ BoxLayout:
                 text: 'Run'
                 size_hint_y: None
                 height: dp(50)
-                on_release: Thread(target=lambda *args: app.convert()).start()
+                on_release: app.convert()
                 
             Button:
                 id: convert
                 text: 'Convert stl mode'
                 size_hint_y: None
                 height: dp(50)
-                on_release: Thread(target=lambda *args: app.convert_mode()).start()
+                on_release: app.convert_mode()
                 
             Button:
                 text: 'Preview'
@@ -68,6 +69,16 @@ BoxLayout:
                 height: dp(50)
                 on_release: app.preview()
 """
+
+
+def run_in_thread(fn):
+    def run(*k, **kw):
+        t = threading.Thread(target=fn, args=k, kwargs=kw)
+        t.daemon = True
+        t.start()
+        return t
+
+    return run
 
 
 class TestApp(App):
@@ -87,19 +98,24 @@ class TestApp(App):
         files_folder = os.path.join(pathlib.Path(__file__).parent.resolve(), 'files')
         return os.path.join(files_folder, file)
 
+    @run_in_thread
     def convert(self):
+        start_time = time.time()
         self.reset_widgets(True)
 
         stl = self.get_file(self.root.ids.field_stl.text)
         obj = self.get_file(self.root.ids.field_obj.text)
 
         try:
-            Stl2Obj().convert(src=stl, dst=obj, debug=True, callback=self.callback, progress_callback=self.progress)
-            print('Conversion done')
+            Stl2Obj().convert(src=stl, dst=obj,
+                              debug=True, callback=self.callback,
+                              progress_callback=self.progress)
+            print(f'Conversion done behind {time.time() - start_time}')
         except (FileNotFoundError, TypeError) as e:
             self.reset_widgets(False)
             print(e)
 
+    @run_in_thread
     def convert_mode(self):
         self.reset_widgets(True)
 
