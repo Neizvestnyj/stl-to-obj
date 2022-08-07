@@ -5,9 +5,8 @@
 #include "importstl.h"
 #include "exportobj.h"
 #include "converter.h"
-#include "check_mode.h"
-
-using namespace std;
+#include "mode.h"
+#include "paths.h"
 
 void convert(
     string src, 
@@ -22,7 +21,9 @@ void convert(
     `callback` - just function, that call pointer like `py_object`
     */
 
-    int code;
+    int code = 0;
+    int progress_part = 1; // how much progress must pass to trigger `py_progress(1)`
+    string tmp_src = "";
     string mode = get_stl_mode(src);
 
     if (debug == false) {
@@ -30,21 +31,35 @@ void convert(
         cout.rdbuf(0);
     }
     
-    if (mode == "BIN") {
+    if (mode == "ASCII") {
+        cout << "Convert ASCII to BIN" << endl;
+        progress_part = 2;
+
+        tmp_src = split_filename(src, "dir") + "tmp.stl";
+        int res = stl_mode_converter(src, tmp_src, "ASCII", progress_part, callback, py_callback, py_progress);
+
+        if (res != 0) {
+            code = 1;
+        }
+        else {
+            src = tmp_src;
+        }
+    }
+
+    if (code == 0) {
         //  create a geometry tesselation object
         Geometry tessel;
 
         //  fill up the tesselation object with STL data (load STL)
-        tessel.visit(ImportSTL(src, callback, py_progress));
+        tessel.visit(ImportSTL(src, callback, py_progress, progress_part));
 
         //  write down the tesselation object into OBJ file (save OBJ)
         tessel.visit(ExportOBJ(dst));
 
-        code = 0;
-    }
-    else {
-        cout << "File must be in BIN format" << endl;
-        code = -1;
+        if (tmp_src != "") {
+            remove(tmp_src.c_str());
+            cout << tmp_src << " removed" << endl;
+        }
     }
 
     if (callback && py_callback) {
