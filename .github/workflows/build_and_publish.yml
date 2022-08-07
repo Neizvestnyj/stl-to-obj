@@ -1,4 +1,4 @@
-name: Build
+name: Build_and_Publish
 on:
   push:
   pull_request:
@@ -11,20 +11,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
+        os: [windows-latest]
         include:
-          - os: ubuntu-latest
-            python-version: 3.9
-            architecture: x64
-            dist: sdist bdist_wheel
-            target: Linux
-
-          - os: macos-latest
-            python-version: 3.9
-            dist: sdist bdist_wheel
-            architecture: x64
-            target: Macos
-            
           - os: windows-latest
             python-version: 3.9
             dist: sdist bdist_wheel
@@ -55,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: dist
+        path: publish_dist
 
   # Deploy job. Uploads distribution to PyPI (only on tags)
   deploy:
@@ -74,11 +62,11 @@ jobs:
       uses: actions/download-artifact@v2
       with:
         name: dist
-        path: dist
+        path: publish_dist
 
     - name: Publish to PyPI
       uses: pypa/gh-action-pypi-publish@v1.5.1
       with:
         user: __token__
         password: ${{ secrets.PYPI_TOKEN }}
-        packages_dir: dist/
+        packages_dir: publish_dist/

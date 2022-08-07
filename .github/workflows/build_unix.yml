@@ -1,0 +1,52 @@
+name: Build-UNIX
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  # Build job. Builds source distribution (sdist) and binary wheels distribution (bdist_wheel)
+  build:
+    name: Build ${{ matrix.dist }} [${{ matrix.python-version }} | ${{ matrix.os }} ${{ matrix.architecture }}]
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        include:
+          - os: ubuntu-latest
+            python-version: 3.9
+            architecture: x64
+            dist: sdist bdist_wheel
+            target: Linux
+
+          - os: macos-latest
+            python-version: 3.9
+            dist: sdist bdist_wheel
+            architecture: x64
+            target: Macos
+            
+    runs-on: ${{ matrix.os }}
+    env:
+      PYTHONUNBUFFERED: 1
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+        architecture: ${{ matrix.architecture }}
+
+    - name: Build
+      run: |
+        python -m pip install --upgrade pip
+        python -m pip install --upgrade setuptools wheel
+        python -m pip install --upgrade cython
+        python setup.py ${{ matrix.dist }}
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: dist
+        path: dist
