@@ -15,8 +15,17 @@ cdef extern from "src/converter.h":
         bool debug,
         void(*callback)(int, void*),
         void* py_object,
-        void* py_progress
-        ) nogil #your .h and .cpp must be like this also
+        void* py_progress) nogil #your .h and .cpp must be like this also
+
+cdef extern from "src/mode.h":
+    int stl_mode_converter(
+        string input_fname,
+        string output_fname,
+        string mode,
+        int progress_part,
+        void(*callback)(int, void*),
+        void* py_object,
+        void* py_progress) nogil #your .h and .cpp must be like this also
 
 # c callback to call python callback
 cdef void c_callback(int result, void* py_object) with gil:
@@ -64,3 +73,34 @@ cdef class Stl2Obj:
 
         with nogil:
             convert(cpp_src, cpp_dst, cpp_debug, c_callback, callback_ptr, progress_ptr)
+
+    def stl_mode_converter(self,
+                           str src,
+                           str dst,
+                           mode: str = "AUTO",
+                           callback: object = None,
+                           progress_callback: object = None):
+        if not exists(src):
+            raise FileNotFoundError(f'{src} does not exists')
+
+        if Path(src).suffix != '.stl':
+            raise TypeError(f'{src} have invalid type, must be stl')
+
+        if Path(dst).suffix != '.stl':
+            raise TypeError(f'{src} have invalid type, must be stl')
+
+        p = Path(dst)
+
+        if not exists(p.parent):
+            raise OSError(f'{p.parent} directory does not exist')
+
+        cdef string cpp_src = <string>src.encode('utf-8')
+        cdef string cpp_dst = <string>dst.encode('utf-8')
+        cdef string cpp_mode = <string>mode.encode('utf-8')
+        cdef int cpp_progress_part = 1
+
+        cdef void* callback_ptr = <void*>callback
+        cdef void* progress_ptr = <void*>progress_callback
+
+        with nogil:
+            stl_mode_converter(cpp_src, cpp_dst, cpp_mode, cpp_progress_part, c_callback, callback_ptr, progress_ptr)
