@@ -36,10 +36,16 @@ BoxLayout:
                 
             ProgressBar:
                 id: pb
+                
+            Label:
+                id: log_lbl
+                text: ''
+                size_hint_y: None
+                height: self.texture_size[1]
             
             Widget:
                 size_hint_y: None
-                height: max(root.height - dp(100) - field_obj.height * 2 - dp(20 * 5) - dp(20 * 2), dp(10))
+                height: max(root.height - dp(50 * 3) - field_obj.height * 2 - dp(20 * 7) - dp(20 * 2) - log_lbl.height, dp(10))
                 
             Button:
                 id: run
@@ -49,7 +55,15 @@ BoxLayout:
                 on_release: Thread(target=lambda *args: app.convert()).start()
                 
             Button:
+                id: convert
+                text: 'Convert stl mode'
+                size_hint_y: None
+                height: dp(50)
+                on_release: Thread(target=lambda *args: app.convert_mode()).start()
+                
+            Button:
                 text: 'Preview'
+                id: preview
                 size_hint_y: None
                 height: dp(50)
                 on_release: app.preview()
@@ -65,29 +79,60 @@ class TestApp(App):
     def build(self):
         return Builder.load_string(KV)
 
+    def on_start(self):
+        self.get_files_folder()
+
     @staticmethod
     def get_file(file: str):
         files_folder = os.path.join(pathlib.Path(__file__).parent.resolve(), 'files')
         return os.path.join(files_folder, file)
 
     def convert(self):
-        self.root.ids.run.disabled = True
+        self.reset_widgets(True)
+
         stl = self.get_file(self.root.ids.field_stl.text)
         obj = self.get_file(self.root.ids.field_obj.text)
 
         try:
-            Stl2Obj().convert(src=stl, dst=obj, debug=False, callback=self.callback, progress_callback=self.progress)
+            Stl2Obj().convert(src=stl, dst=obj, debug=True, callback=self.callback, progress_callback=self.progress)
             print('Conversion done')
         except (FileNotFoundError, TypeError) as e:
-            self.reset_widgets()
+            self.reset_widgets(False)
             print(e)
 
-    def reset_widgets(self):
-        self.root.ids.run.disabled = False
-        self.root.ids.pb.value = 0
+    def convert_mode(self):
+        self.reset_widgets(True)
+
+        stl = self.get_file(self.root.ids.field_stl.text)
+        output = stl.replace('.stl', '-converted.stl')
+
+        try:
+            f = open(stl, encoding='latin-1')
+            first_line = f.readline()
+
+            if 'solid' in first_line:
+                # like `get_stl_mode` in c++
+                mode = 'ASCII'
+            else:
+                mode = 'BIN'
+
+            self.root.ids.log_lbl.text = f'.stl file in {mode} mode'
+
+            Stl2Obj().stl_mode_converter(src=stl, dst=output, callback=self.callback, progress_callback=self.progress)
+            print('Conversion mode done')
+        except (FileNotFoundError, TypeError) as e:
+            self.reset_widgets(False)
+            print(e)
+
+    def reset_widgets(self, reset: bool):
+        self.root.ids.run.disabled = reset
+        self.root.ids.convert.disabled = reset
+        self.root.ids.preview.disabled = reset
+        self.root.ids.log_lbl.text = ''
+        self.root.ids.pb.value = int(reset)
 
     def callback(self, code: int):
-        self.reset_widgets()
+        self.reset_widgets(False)
 
         if code == -1:
             raise TypeError
@@ -95,7 +140,7 @@ class TestApp(App):
         print(code)
 
     def progress(self, value: int):
-        self.root.ids.pb.value = value
+        self.root.ids.pb.value += value
 
     def preview(self):
         try:
@@ -110,6 +155,19 @@ class TestApp(App):
         except (OverflowError, GraphicException) as e:
             # https://github.com/kivy/kivy/issues/7105#issuecomment-1195393114
             Logger.critical(msg=f'{e}')
+
+    def get_files_folder(self):
+        """
+        :return:
+        If you want to use example immediately after downloading package
+        """
+
+        files_path = os.path.join(pathlib.Path(__file__).parents[2].resolve(), 'files')
+
+        if os.path.exists(files_path):
+            if any('.stl' in file for file in os.listdir(files_path)):
+                self.root.ids.field_stl.text = os.path.join(files_path, self.root.ids.field_stl.text)
+                self.root.ids.field_obj.text = os.path.join(files_path, self.root.ids.field_obj.text)
 
 
 TestApp().run()
