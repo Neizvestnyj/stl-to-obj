@@ -43,7 +43,7 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: dist
-        path: publish_dist
+        path: dist
 
   # Deploy job. Uploads distribution to PyPI (only on tags)
   deploy:
