@@ -7,5 +7,4 @@ recursive-include stl2obj *.pyx *.h *.cpp
 recursive-exclude examples *
 recursive-exclude files *.stl
 recursive-exclude __pycache__ *
-recursive-exclude stl2obj.egg-info *
 recursive-exclude .github *
