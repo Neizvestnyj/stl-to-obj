@@ -1,9 +1,8 @@
 #include <fstream>
 #include <chrono>
+
 #include "exportobj.h"
 #include "vectornd.h"
-
-using namespace std;
 
 void ExportOBJ::save(Geometry& model)
 {
