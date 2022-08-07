@@ -1,0 +1,86 @@
+solid b'numpy-stl (2.17.1) 2022-07-22 03:02:31.859575 cube.stl'
+facet normal 0.0 0.0 -4.0
+  outer loop
+    vertex -1.0 -1.0 -1.0
+    vertex -1.0 1.0 -1.0
+    vertex 1.0 -1.0 -1.0
+  endloop
+endfacet
+facet normal 0.0 0.0 -4.0
+  outer loop
+    vertex 1.0 -1.0 -1.0
+    vertex -1.0 1.0 -1.0
+    vertex 1.0 1.0 -1.0
+  endloop
+endfacet
+facet normal -4.0 0.0 0.0
+  outer loop
+    vertex -1.0 -1.0 -1.0
+    vertex -1.0 -1.0 1.0
+    vertex -1.0 1.0 1.0
+  endloop
+endfacet
+facet normal -4.0 0.0 0.0
+  outer loop
+    vertex -1.0 -1.0 -1.0
+    vertex -1.0 1.0 1.0
+    vertex -1.0 1.0 -1.0
+  endloop
+endfacet
+facet normal 0.0 0.0 4.0
+  outer loop
+    vertex -1.0 -1.0 1.0
+    vertex 1.0 -1.0 1.0
+    vertex 1.0 1.0 1.0
+  endloop
+endfacet
+facet normal 0.0 0.0 4.0
+  outer loop
+    vertex -1.0 -1.0 1.0
+    vertex 1.0 1.0 1.0
+    vertex -1.0 1.0 1.0
+  endloop
+endfacet
+facet normal 4.0 0.0 0.0
+  outer loop
+    vertex 1.0 -1.0 1.0
+    vertex 1.0 -1.0 -1.0
+    vertex 1.0 1.0 -1.0
+  endloop
+endfacet
+facet normal 4.0 -0.0 0.0
+  outer loop
+    vertex 1.0 -1.0 1.0
+    vertex 1.0 1.0 -1.0
+    vertex 1.0 1.0 1.0
+  endloop
+endfacet
+facet normal 0.0 4.0 -0.0
+  outer loop
+    vertex 1.0 1.0 -1.0
+    vertex -1.0 1.0 -1.0
+    vertex 1.0 1.0 1.0
+  endloop
+endfacet
+facet normal 0.0 4.0 0.0
+  outer loop
+    vertex -1.0 1.0 -1.0
+    vertex -1.0 1.0 1.0
+    vertex 1.0 1.0 1.0
+  endloop
+endfacet
+facet normal 0.0 -4.0 0.0
+  outer loop
+    vertex -1.0 -1.0 -1.0
+    vertex 1.0 -1.0 -1.0
+    vertex 1.0 -1.0 1.0
+  endloop
+endfacet
+facet normal 0.0 -4.0 0.0
+  outer loop
+    vertex -1.0 -1.0 -1.0
+    vertex 1.0 -1.0 1.0
+    vertex -1.0 -1.0 1.0
+  endloop
+endfacet
+endsolid b'numpy-stl (2.17.1) 2022-07-22 03:02:31.859575 cube.stl'
