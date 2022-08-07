@@ -43,7 +43,7 @@ int stl_mode_converter(string input_fname,
                        void(*callback)(int, void*) = NULL,
                        void* py_callback = NULL,
                        void* py_progress = NULL,
-                       const bool is_next = false
+                       bool is_next = false
 ) {
     /*
     input_fname - path to stl input file

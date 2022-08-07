@@ -10,6 +10,6 @@ int stl_mode_converter(string input_fname,
 					   void(*callback)(int, void*),
 					   void* py_callback,
 					   void* py_progress,
-					   const bool is_next
+					   bool is_next
 	);
 string get_stl_mode(string file);

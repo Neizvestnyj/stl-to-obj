@@ -148,12 +148,11 @@ class TestApp(App):
         self.root.ids.pb.value = int(reset)
 
     def callback(self, code: int):
+        print(f'Callback code {code}')
         self.reset_widgets(False)
 
         if code == -1:
             raise TypeError
-
-        print(code)
 
     def progress(self, value: int):
         self.root.ids.pb.value += value
