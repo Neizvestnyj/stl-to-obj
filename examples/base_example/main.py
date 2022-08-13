@@ -4,7 +4,7 @@ import pathlib
 
 current_folder = os.path.join(pathlib.Path(__file__).parents[2].resolve(), 'files')
 
-stl = os.path.join(current_folder, 'cube.stl')
-obj = os.path.join(current_folder, 'cube.obj')
+src = os.path.join(current_folder, 'cube.stl')
+dst = os.path.join(current_folder, 'cube.obj')
 a = Stl2Obj()
-a.convert(stl, obj)
+a.convert(src, dst)
