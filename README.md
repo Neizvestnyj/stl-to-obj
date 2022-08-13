@@ -89,4 +89,4 @@ toolchain create Stl-to-obj examples/kivy_example
 
 ## Authors
 
-[Neizvestnyj](https://github.com/Neizvestnyj), [psychowasp](https://github.com/psychowasp), [Amir Baserinia](https://github.com/baserinia)
+[Neizvestnyj](https://github.com/Neizvestnyj), [psychowasp](https://github.com/psychowasp), [Amir Baserinia](https://github.com/baserinia), [psaghelyi](https://github.com/psaghelyi)
