@@ -103,12 +103,14 @@ class TestApp(App):
         start_time = time.time()
         self.reset_widgets(True)
 
-        stl = self.get_file(self.root.ids.field_stl.text)
-        obj = self.get_file(self.root.ids.field_obj.text)
+        src = self.get_file(self.root.ids.field_stl.text)
+        dst = self.get_file(self.root.ids.field_obj.text)
 
         try:
-            Stl2Obj().convert(src=stl, dst=obj,
-                              debug=True, callback=self.callback,
+            Stl2Obj().convert(src=src,
+                              dst=dst,
+                              debug=True,
+                              callback=self.callback,
                               progress_callback=self.progress)
             print(f'Conversion done behind {time.time() - start_time}')
         except (FileNotFoundError, TypeError) as e:

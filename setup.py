@@ -54,11 +54,13 @@ cpp_sources = []
 path_to_src = os.path.join(stl2obj_dir, 'src')
 
 # check if all files are included
-for file in os.listdir(path_to_src):
-    name, ext = os.path.splitext(file)
+for fd, sub_fds, fns in os.walk(path_to_src):
+    for fn in fns:
+        path_to_file = os.path.join(fd, fn)
+        name, ext = os.path.splitext(path_to_file)
 
-    if ext == '.cpp':
-        cpp_sources.append(file)
+        if ext == '.cpp':
+            cpp_sources.append(path_to_file)
 
 additional_files = [os.path.join(path_to_src, src) for src in cpp_sources]
 

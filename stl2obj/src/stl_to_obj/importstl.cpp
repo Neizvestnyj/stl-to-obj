@@ -6,7 +6,7 @@
 #include "importstl.h"
 #include "vectornd.h"
 #include "kdtree.h"
-#include "progress.h"
+#include "../progress.h"
 
 template<typename T>
 T read(ifstream& stream)
