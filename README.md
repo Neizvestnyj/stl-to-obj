@@ -1,8 +1,8 @@
 # stl-to-obj
 
 ## What is it?
-It is powerful python tool to convert stl file to obj using c++ in backend and built 
-with cython for all platforms
+It is powerful python tool to convert **.stl** file to **.obj** and **.obj** file to **.stl**
+using c++ in backend and built with cython for all platforms
 
 [![PyPI version](https://img.shields.io/pypi/v/stl2obj.svg)](https://pypi.org/project/stl2obj)
 [![Documentation Status](https://readthedocs.org/projects/stl-to-obj/badge/?version=latest)](https://stl-to-obj.readthedocs.io/en/latest/?badge=latest)
@@ -47,11 +47,11 @@ python setup.py install
 ```py
 from stl2obj import Stl2Obj
 
-stl = 'path-to-stl-file'
-obj = 'path-to-obj-file'
+src = 'path-to-src-file'  # may be stl or obj
+dst = 'path-to-dst-file'  # may be stl or obj
 callback = lambda code: print(code)
 
-Stl2Obj().convert(stl, obj, callback)
+Stl2Obj().convert(src, dst, callback)
 ```
 
 ## Usage with [python-for-android](https://github.com/kivy/python-for-android)
