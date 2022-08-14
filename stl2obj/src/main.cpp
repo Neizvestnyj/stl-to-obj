@@ -37,8 +37,8 @@ int main(int argc, char** argv)
     }
     else {
         cout << "You cant pass arguments, using default" << endl;
-        src = "F:\\VS\\stl-to-obj\\files\\cube.obj";
-        dst = "F:\\VS\\stl-to-obj\\files\\cube.stl";
+        src = "F:\\VS\\stl-to-obj\\files\\cube.stl";
+        dst = "F:\\VS\\stl-to-obj\\files\\cube_converted.obj";
     }
 
     cout << src << " will be converted and save as " << dst << endl;
