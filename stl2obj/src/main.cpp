@@ -1,7 +1,7 @@
 #include <string>
 #include <iostream>
 
-#include "converter.h"
+#include "convert.h"
 
 using namespace std;
 
@@ -31,14 +31,14 @@ int main(int argc, char** argv)
 {
     string src, dst;
 
-    if (argv[0] && argv[1]) {
+    if (argc > 2) {
         src = argv[1];
         dst = argv[2];
     }
     else {
         cout << "You cant pass arguments, using default" << endl;
-        src = "F:\\VS\\stl-to-obj\\files\\cube.stl";
-        dst = "F:\\VS\\stl-to-obj\\files\\cube.obj";
+        src = "F:\\VS\\stl-to-obj\\files\\cube.obj";
+        dst = "F:\\VS\\stl-to-obj\\files\\cube.stl";
     }
 
     cout << src << " will be converted and save as " << dst << endl;

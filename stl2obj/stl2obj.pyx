@@ -8,7 +8,7 @@ from os.path import exists
 from pathlib import Path
 
 # Redeclare the .h in cython space
-cdef extern from "src/converter.h":
+cdef extern from "src/convert.h":
     void convert(
         string src,
         string dst,
@@ -46,14 +46,14 @@ cdef class Stl2Obj:
                 debug: bool = True,
                 callback: object = None,
                 progress_callback: object = None):
+
         if not exists(src):
             raise FileNotFoundError(f'{src} does not exists')
 
-        if Path(src).suffix != '.stl':
-            raise TypeError(f'{src} have invalid type, must be stl')
-
-        if Path(dst).suffix != '.obj':
-            raise TypeError(f'{src} have invalid type, must be obj')
+        if not ((Path(src).suffix == '.stl' and Path(dst).suffix == '.obj') or
+                (Path(src).suffix == '.obj' and Path(dst).suffix == '.stl')
+                ):
+            raise TypeError(f'{src} have invalid type')
 
         p = Path(dst)
 

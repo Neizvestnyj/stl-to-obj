@@ -1,5 +1,6 @@
 #include <iostream>
 #include <ctime>
+#include <algorithm>
 
 #include "paths.h"
 
@@ -14,6 +15,23 @@ string split_filename(string str, string type = "dir")
     else {
         return str.substr(found + 1);
     }
+}
+
+string get_extention(string filename) {
+    string extension = "";
+    string::size_type idx;
+
+    idx = filename.rfind('.');
+
+    if (idx != std::string::npos)
+    {
+        extension = filename.substr(idx + 1);
+    }
+    
+    transform(extension.begin(), extension.end(), extension.begin(),
+        [](unsigned char c) { return std::tolower(c); });
+
+    return extension;
 }
 
 unsigned int FileRead(istream& is, vector <char>& buff) {
