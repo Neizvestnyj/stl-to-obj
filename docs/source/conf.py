@@ -7,7 +7,7 @@ project = 'stl2obj'
 copyright = '2022, Neizvestnyj'
 author = 'Neizvestnyj'
 
-version = '0.2dev0'
+version = '0.3'
 release = version
 
 extensions = [
