@@ -6,6 +6,9 @@ Welcome to stl2obj's documentation!
 
    Welcome <self>
 
+Best and fastest python 3D files converter based on c++ functions
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 .. toctree::
    :maxdepth: 1
 
