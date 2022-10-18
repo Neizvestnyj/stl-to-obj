@@ -24,9 +24,10 @@ A clear and concise description of what you expected to happen.
 If applicable, add screenshots to help explain your problem.
 
 **Desktop (please complete the following information):**
- - OS: [e.g. iOS]
+- OS: [e.g. iOS]
 - Arch: [e.g. x86-x64] 
- - Python version [e.g. 3.10]
+- Python version [e.g. 3.10]
+- Cython version [e.g. 3.10]
 - C++ version: [e.g. 14]
 
 **Additional context**
